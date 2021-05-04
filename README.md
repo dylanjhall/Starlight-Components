@@ -106,3 +106,10 @@ Visit [Nx Cloud](https://nx.app/) to learn more.
 
 ## Resources
 https://nx.dev/latest/angular/angular/library
+
+Pubblish config inside each component in package.json
+"publishConfig": {
+
+ "registry": "http://sotiartifacts.corp.soti.net:8081/artifactory/api/npm/npm_staging_internal/"
+
+ }
