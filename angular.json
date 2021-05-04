@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "starlight",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "starlight": {
+      "projectType": "application",
+      "root": "apps/starlight",
+      "sourceRoot": "apps/starlight/src",
+      "prefix": "starlight-components",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/starlight",
+            "index": "apps/starlight/src/index.html",
+            "main": "apps/starlight/src/main.ts",
+            "polyfills": "apps/starlight/src/polyfills.ts",
+            "tsConfig": "apps/starlight/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/starlight/src/favicon.ico",
+              "apps/starlight/src/assets"
+            ],
+            "styles": ["apps/starlight/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/starlight/src/environments/environment.ts",
+                  "with": "apps/starlight/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "starlight:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "starlight:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "starlight:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/starlight/src/**/*.ts",
+              "apps/starlight/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/starlight"],
+          "options": {
+            "jestConfig": "apps/starlight/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "starlight-e2e": {
+      "root": "apps/starlight-e2e",
+      "sourceRoot": "apps/starlight-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/starlight-e2e/cypress.json",
+            "tsConfig": "apps/starlight-e2e/tsconfig.e2e.json",
+            "devServerTarget": "starlight:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "starlight:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/starlight-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
