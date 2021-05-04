@@ -145,6 +145,31 @@
           }
         }
       }
+    },
+    "calendar": {
+      "projectType": "library",
+      "root": "libs/calendar",
+      "sourceRoot": "libs/calendar/src",
+      "prefix": "starlight-components",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/calendar/src/**/*.ts",
+              "libs/calendar/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/calendar"],
+          "options": {
+            "jestConfig": "libs/calendar/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
